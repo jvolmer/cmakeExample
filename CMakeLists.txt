@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 project(ExampleProject
   VERSION 1.0
   LANGUAGES CXX)
+include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
 set(CMAKE_CXX_STANDARD 14)
 

@@ -15,14 +15,13 @@
       steps:
       - uses: actions/checkout@v2
       # install dependencies
-      - name: boost
-        run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
-      - name: turtle
+      - name: conan
         run: |
-          git clone git@github.com:mat007/turtle.git
-          cd turtle
-          cmake -S . -B build
-          cmake --install build
+          pip install conan
+          conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
+      - name: install
+        run: conan install --install-folder build .
       - name: gcovr
         run: pip install gcovr
       # build project
