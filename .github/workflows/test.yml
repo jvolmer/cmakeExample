@@ -1,0 +1,36 @@
+  name: tests
+
+  on:
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
+      
+  jobs:
+    
+    coverage:
+      
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v2
+      # install dependencies
+      - name: boost
+        run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
+      - name: turtle
+        run: |
+          git clone git@github.com:mat007/turtle.git
+          cd turtle
+          cmake -S . -B build
+          cmake --install build
+      - name: gcovr
+        run: pip install gcovr
+      # build project
+      - name: cmake generate
+        run: cmake -S . -B build
+      - name: cmake generate
+        run: cmake --build build --target coverage
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
