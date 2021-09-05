@@ -9,12 +9,5 @@ target_link_libraries (${TARGET} PRIVATE ${CMAKE_PROJECT_NAME}_lib Boost::unit_t
 add_custom_target(test COMMAND ${TARGET}
   COMMENT "Execute tests")
 
-find_program(GCOVR_PATH gcovr)
-add_custom_target(coverage
-  COMMAND ${GCOVR_PATH} --xml=coverage.xml --txt -r ${PROJECT_SOURCE_DIR}
-  DEPENDS test
-  BYPRODUCTS coverage.xml
-  COMMENT "Check test coverage")
-
 add_subdirectory(position)
 add_subdirectory(location)
